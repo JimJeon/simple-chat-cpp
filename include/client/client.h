@@ -9,6 +9,8 @@
 
 #include <string>
 
+#include "sysmsg.hpp"
+
 using namespace std;
 
 class Client {
