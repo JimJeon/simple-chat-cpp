@@ -5,9 +5,8 @@
 #include <cstdlib>
 
 void DieWithErrorMsg(const char* errmsg) {
-    fprintf(stderr, "%s", errmsg);
-    fprintf(stderr, "\n");
-
+    fputs(errmsg, stderr);
+    fputc('\n', stderr);
     exit(EXIT_FAILURE);
 }
 
