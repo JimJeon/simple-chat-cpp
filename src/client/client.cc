@@ -1,7 +1,5 @@
 #include "client/client.h"
 
-#include <cstdio>
-
 Client::Client(const string name, const string ip, const int port)
   : username_(name),
     BUFSIZE(200)

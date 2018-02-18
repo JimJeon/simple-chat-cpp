@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
+#include <cstdio>
 #include <string>
 
 #include "sysmsg.hpp"
