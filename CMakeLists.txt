@@ -9,8 +9,8 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-file (GLOB CLIENT_SOURCES "src/client/*.cc")
-file (GLOB SERVER_SOURCES "src/server/*.cc")
+file (GLOB CLIENT_SOURCES "src/client/*.cc" "src/sysmsg.cc")
+file (GLOB SERVER_SOURCES "src/server/*.cc" "src/sysmsg.cc")
 
 add_executable (chat ${CLIENT_SOURCES})
 add_executable (run_server ${SERVER_SOURCES})

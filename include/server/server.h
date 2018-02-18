@@ -11,7 +11,7 @@
 #include <cstring>
 #include <string>
 
-#include "sysmsg.hpp"
+#include "sysmsg.h"
 
 using namespace std;
 
