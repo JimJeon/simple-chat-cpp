@@ -1,5 +1,7 @@
 #include "server/server.h"
 
+#include <cstdio>
+
 Server::Server()
   : MAXPENDING(5),
     BUFSIZE(200)
