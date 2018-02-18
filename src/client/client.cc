@@ -36,10 +36,7 @@ void Client::ConnectServer(const string ip, const int port) {
 }
 
 void Client::SendMsg(const string& msg) const {
-    printf("sending msg\n");
     ssize_t num_bytes_sent = send(socket_, msg.c_str(), msg.length(), 0);
-    printf("debug point 1\n");
-    printf("%ld sent\n", num_bytes_sent);
     if(num_bytes_sent < 0) {
         fprintf(stderr, "message send failed\n");
     }

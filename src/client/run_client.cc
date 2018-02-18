@@ -18,10 +18,7 @@ int main(int argc, char *argv[]) {
     char buf[200];
     while(1) {
         scanf("%s", buf);
-
-        printf("msg: %s\n", buf);
         client.SendMsg(string(buf));
-        printf("msg sent\n");
     }
     return 0;
 }
