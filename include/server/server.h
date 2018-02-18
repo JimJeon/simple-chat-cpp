@@ -10,6 +10,8 @@
 #include <string>
 #include <cstring>
 
+#include "sysmsg.hpp"
+
 using namespace std;
 
 class Server {
