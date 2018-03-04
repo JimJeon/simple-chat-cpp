@@ -23,14 +23,16 @@ public:
     virtual ~Server();
 
     void RunServer();
+    void HandleClient(int clntsock);
     void HandlePackets();
     int Accept();
 
 private:
     vector<int> clients_;
     int socket_;
-    const int MAXPENDING;
-    const int BUFSIZE;
+
+    static const int MAXPENDING = 5;
+    static const int BUFSIZE = 1024;
 };
 
 #endif//CPP_CHAT_SERVER_H
