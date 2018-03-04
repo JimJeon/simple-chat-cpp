@@ -1,9 +1,6 @@
 #include "server/server.h"
 
-Server::Server()
-  : MAXPENDING(5),
-    BUFSIZE(200)
-{
+Server::Server() {
     socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (socket_ < 0) {
         DieWithErrorMsg("socket() failed");
@@ -36,25 +33,55 @@ Server::~Server() {
 }
 
 void Server::RunServer() {
+    vector<thread> threads;
     while(1) {
         Accept();
-        HandlePackets();
+        // When a thread object goes out of scope and it is in joinable state,
+        // the program is terminated with error message, terminate called without
+        // an active exception.
+        for (auto& client : clients_)
+            threads.emplace_back(&Server::HandleClient, this, client);
     }
+    for (auto& t : threads)
+        t.join();
+}
+
+void Server::HandleClient(int clntsock) {
+    char buf[BUFSIZE];
+    ssize_t num_bytes_rcvd;
+    do {
+        num_bytes_rcvd = recv(clntsock, buf, BUFSIZE, 0);
+        fputs("Debug point: msg received\n", stderr);
+        if (num_bytes_rcvd < 0) {
+            DieWithErrorMsg("recv() failed");
+        }
+        buf[num_bytes_rcvd] = '\0';
+
+        // It is supposed to print string to stdout when thread is terminated.
+        // It means when clients_ vector is empty.
+        fputs(buf, stdout);
+
+    } while (num_bytes_rcvd > 0);
+    puts("");
 }
 
 void Server::HandlePackets() {
     char buf[BUFSIZE];
+    if (clients_.empty()) return;
     for (auto& client : clients_) {
         ssize_t num_bytes_rcvd;
         do {
             num_bytes_rcvd = recv(client, buf, BUFSIZE, 0);
+            fputs("Debug point: msg received\n", stderr);
             if (num_bytes_rcvd < 0) {
                 DieWithErrorMsg("recv() failed");
             }
+            buf[num_bytes_rcvd] = '\0';
 
-            for (int i = 0; i < num_bytes_rcvd; ++i) {
-                printf("%c", buf[i]);
-            }
+            // It is supposed to print string to stdout when thread is terminated.
+            // It means when clients_ vector is empty.
+            fputs(buf, stdout);
+
         } while (num_bytes_rcvd > 0);
         puts("");
     }
@@ -77,5 +104,5 @@ int Server::Accept() {
         puts("Unable to get client address");
 
     clients_.emplace_back(clnt_sock);
-    return clnt_sock;
+    return 0;
 }
