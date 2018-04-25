@@ -10,24 +10,22 @@
 #include <cstdio>
 #include <cstring>
 #include <string>
-#include <thread>
-#include <vector>
 
 #include "sysmsg.h"
 
 using namespace std;
 
 class Server {
+protected:
+    void HandleTCPClient(int socket);
+
 public:
     Server();
     virtual ~Server();
 
     void RunServer();
-    void HandlePackets();
-    int Accept();
 
 private:
-    vector<int> clients_;
     int socket_;
     const int MAXPENDING;
     const int BUFSIZE;
